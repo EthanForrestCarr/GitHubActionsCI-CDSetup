@@ -39,17 +39,18 @@ workflows:
     jobs:
       - start-server
       - cypress/run:
-        name: run-component-tests
-        cypress-command: npx cypress run --component
+          name: run-component-tests
+          cypress-command: npx cypress run --component
       - deploy-to-staging:
-        requires:
-          - run-component-tests
-        filters:
-          branches:
-            only: main
+          requires:
+            - run-component-tests
+          filters:
+            branches:
+              only: main
       - hold:
           type: approval
-          requires: deploy-to-staging
+          requires:
+            - deploy-to-staging
       - deploy-to-production:
           requires:
             - hold
