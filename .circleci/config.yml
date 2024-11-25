@@ -15,23 +15,23 @@ jobs:
       - run:
         name: build
         command: npm run build
-    deploy-to-staging:
-      docker:
-        - image: cimg/base:current
-      steps:
-        - run:
+  deploy-to-staging:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - run:
           name: Deploy to staging
           command: |
             echo "Deploying to staging"
             curl $RENDER_STAGING_DEPLOYHOOK
-            
+
 workflows:
   run-tests-and-stage-workflow:
     jobs:
       - start-server
       - cypress/run:
         name: run-component-tests
-        command: npm cypress run --component
+        command: npx cypress run --component
       - deploy-to-staging:
         requires:
           - run-component-tests
