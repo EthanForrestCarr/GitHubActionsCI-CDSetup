@@ -11,7 +11,8 @@ export default async (modelName: "Question", collectionName: string) => {
 
     if (modelExists.length) {
       await db.dropCollection(collectionName);
-    }}
+    }
+  }
   } catch (err) {
     throw err;
   }
